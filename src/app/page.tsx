@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div>
       <h1>hola!!</h1>
-      {productsToPreLoad.map((product, index) => (
+      {/* {productsToPreLoad.map((product, index) => (
         <Card
           key={index}
           name={product.name}
@@ -13,7 +13,7 @@ export default function Home() {
           description={product.description}
           image={product.image}
         />
-      ))}
+      ))} */}
     </div>
   );
 }
