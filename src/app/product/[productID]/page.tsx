@@ -1,3 +1,4 @@
+import ProductDetail from "@/app/components/productDetail";
 import React from "react";
 
 function page({ params }: { params: { productID: string } }) {
@@ -6,7 +7,7 @@ function page({ params }: { params: { productID: string } }) {
   return (
     <div>
       Product page
-      <h1>Product {productID}</h1>
+      <ProductDetail id={productID} />
     </div>
   );
 }

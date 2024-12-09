@@ -16,3 +16,8 @@ export interface IProduct {
   image: string;
   categoryId: number;
 }
+
+export interface FormData {
+  email: string;
+  password: string;
+}

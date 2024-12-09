@@ -69,3 +69,34 @@ export const productsToPreLoad: IProduct[] = [
     stock: 10,
   },
 ];
+
+// En este objeto se definen qué caracteres se usarán para la validación de los campos de los formularios.
+export const validationRules = {
+  email: {
+    required: {
+      value: true,
+      message: "Correo requerido",
+    },
+    pattern: {
+      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      message: "Correo no valido",
+    },
+  },
+
+  password: {
+    required: {
+      value: true,
+      message: "La contraseña es requerida",
+    },
+    minLength: {
+      value: 8,
+      message: "La contraseña debe tener minimo 8 caracteres",
+    },
+    pattern: {
+      value:
+        /^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[@$!%*?&#.])[A-Za-znÑ\d@$!%*?&#.-]{8,}$/,
+      message:
+        "La contraseña debe tener una mayuscula, minuscula, un numero y un caracter especial",
+    },
+  },
+};

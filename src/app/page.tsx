@@ -1,17 +1,22 @@
+import { getProducts } from "@/services";
 import CardProduct from "./components/Card";
-import { productsToPreLoad } from "./utils/dataMock";
+import Link from "next/link";
+// import { productsToPreLoad } from "./utils/dataMock";
 
-export default function Home() {
+export default async function Home() {
+  const products = await getProducts();
   return (
     <div className="flex gap-5 justify-center items-center flex-wrap my-10">
-      {productsToPreLoad.map((product, index) => (
-        <CardProduct
-          key={index}
-          name={product.name}
-          price={product.price}
-          description={product.description}
-          image={product.image}
-        />
+      {products.map((product, index) => (
+        <Link key={index} href={`/product/${product.id}`}>
+          <CardProduct
+            key={index}
+            name={product.name}
+            price={product.price}
+            description={product.description}
+            image={product.image}
+          />
+        </Link>
       ))}
     </div>
   );
