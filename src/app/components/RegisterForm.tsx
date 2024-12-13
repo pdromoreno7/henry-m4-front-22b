@@ -1,11 +1,18 @@
 "use client";
 
-import { FormData } from "@/interfaces";
+import { RegisterFormType } from "@/interfaces";
+import { registerUser } from "@/services/authServices";
+import useUserDataStore from "@/store";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 import { useForm, Controller } from "react-hook-form";
 
 function RegisterForm() {
+  const { userData } = useUserDataStore();
+  const router = useRouter();
   const {
     handleSubmit,
     control,
@@ -21,7 +28,16 @@ function RegisterForm() {
     mode: "onChange",
   });
 
-  const onSubmit = (data: FormData) => {
+  useEffect(() => {
+    if (userData) {
+      router.push("/dashboard");
+    }
+  }, []);
+
+  const onSubmit = async (data: RegisterFormType) => {
+    const res = await registerUser(data);
+    if (res) alert("User created");
+    router.push("/sign-in");
     console.log(data);
   };
 

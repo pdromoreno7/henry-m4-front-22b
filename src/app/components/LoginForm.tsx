@@ -1,11 +1,17 @@
 "use client";
 
-import { FormData } from "@/interfaces";
+import { FormDataType } from "@/interfaces";
+import { loginServices } from "@/services/authServices";
+import useUserDataStore from "@/store";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 function LoginForm() {
+  const router = useRouter();
+  const { setUserData, userData } = useUserDataStore();
   const {
     handleSubmit,
     control,
@@ -18,10 +24,19 @@ function LoginForm() {
     mode: "onChange",
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = async (data: FormDataType) => {
+    const response = await loginServices(data);
+    setUserData(response);
+    router.push("/dashboard");
+    console.log("🚀 ~ onSubmit ~ response:", response);
     console.log(data);
   };
 
+  useEffect(() => {
+    if (userData) {
+      router.push("/dashboard");
+    }
+  }, []);
   return (
     <div className="flex w-full flex-wrap md:flex-nowrap gap-4 h-[100vh]">
       <form

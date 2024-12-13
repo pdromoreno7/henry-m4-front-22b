@@ -11,9 +11,12 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import useUserDataStore from "@/store";
 
 function NavbarMain() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const { userData } = useUserDataStore();
+  console.log("🚀 ~ NavbarMain ~ userData:", userData);
 
   const menuItems = ["About", "Products"];
   return (
@@ -45,16 +48,34 @@ function NavbarMain() {
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
+      {!userData?.token && (
+        <NavbarContent justify="end">
+          <NavbarItem className="hidden lg:flex">
+            <Link href="/sign-in">Login</Link>
+          </NavbarItem>
+          <NavbarItem>
+            <Button as={Link} color="primary" href="#" variant="flat">
+              Sign Up
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
+      )}
+      {userData?.token && (
+        <NavbarContent justify="end">
+          <NavbarItem className="hidden lg:flex">
+            <Link href="/dashboard">{userData.user.name}</Link>
+          </NavbarItem>
+        </NavbarContent>
+      )}
+
+      {userData?.token && (
+        <NavbarContent justify="end">
+          <NavbarItem className="hidden lg:flex">
+            <Link href="#">Logout</Link>
+          </NavbarItem>
+        </NavbarContent>
+      )}
+
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>

@@ -1,4 +1,4 @@
-import { getProducts } from "@/services";
+import { getProducts } from "@/services/productServices";
 import CardProduct from "./components/Card";
 import Link from "next/link";
 // import { productsToPreLoad } from "./utils/dataMock";

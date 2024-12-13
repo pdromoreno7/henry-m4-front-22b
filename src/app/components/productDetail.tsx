@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { IProduct } from "../../interfaces/index";
 
-import { getProductById } from "@/services";
+import { getProductById } from "@/services/productServices";
 
 interface PropsProductDetail {
   id: string;

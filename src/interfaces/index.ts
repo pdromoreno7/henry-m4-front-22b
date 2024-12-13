@@ -17,7 +17,15 @@ export interface IProduct {
   categoryId: number;
 }
 
-export interface FormData {
+export interface RegisterFormType {
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  phone: string;
+}
+
+export interface FormDataType {
   email: string;
   password: string;
 }
