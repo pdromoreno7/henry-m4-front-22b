@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { Facebook, Twitter, Instagram, Linkedin, Mail } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import { Button, Input } from "@nextui-org/react";
 
 export default function Footer() {

@@ -28,15 +28,14 @@ const CardProduct = ({ name, price, description, image }: cardProps) => {
       <CardBody className="overflow-visible py-2">
         <Image
           alt="Card background"
-          className="object-cover rounded-xl"
+          className="object-center rounded-xl border border-default-200 w-full"
           src={image}
-          width={270}
-          height={270}
+          loading="lazy"
         />
       </CardBody>
       <CardFooter>
         <Button className="w-full" color="primary">
-          Add to cart
+          Ver producto
         </Button>
       </CardFooter>
     </Card>

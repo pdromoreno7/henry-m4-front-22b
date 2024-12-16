@@ -3,10 +3,5 @@ export default function RootLayoutDash({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <section>
-      <h1>Dashboard layout∂</h1>
-      {children}
-    </section>
-  );
+  return <section>{children}</section>;
 }

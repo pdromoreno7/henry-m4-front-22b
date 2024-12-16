@@ -5,6 +5,7 @@ import { loginServices } from "@/services/authServices";
 import useUserDataStore from "@/store";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -15,7 +16,7 @@ function LoginForm() {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
       email: "",
@@ -33,7 +34,7 @@ function LoginForm() {
   };
 
   useEffect(() => {
-    if (userData) {
+    if (userData?.token) {
       router.push("/dashboard");
     }
   }, []);
@@ -104,6 +105,7 @@ function LoginForm() {
 
         <Button color="primary" type="submit">
           Login
+          {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         </Button>
       </form>
     </div>

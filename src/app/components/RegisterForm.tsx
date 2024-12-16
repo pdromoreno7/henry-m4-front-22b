@@ -7,8 +7,10 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 import { useForm, Controller } from "react-hook-form";
+import { Loader2 } from "lucide-react";
 
 function RegisterForm() {
   const { userData } = useUserDataStore();
@@ -16,7 +18,7 @@ function RegisterForm() {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { isSubmitting, errors },
   } = useForm({
     defaultValues: {
       name: "",
@@ -29,16 +31,15 @@ function RegisterForm() {
   });
 
   useEffect(() => {
-    if (userData) {
+    if (userData?.token) {
       router.push("/dashboard");
     }
   }, []);
 
   const onSubmit = async (data: RegisterFormType) => {
     const res = await registerUser(data);
-    if (res) alert("User created");
+    if (res) toast("Usuario registrado con exito");
     router.push("/sign-in");
-    console.log(data);
   };
 
   return (
@@ -192,6 +193,7 @@ function RegisterForm() {
 
         <Button color="primary" type="submit">
           Register
+          {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         </Button>
       </form>
     </div>

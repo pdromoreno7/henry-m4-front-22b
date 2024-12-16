@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -13,10 +13,26 @@ import {
 } from "@nextui-org/react";
 import useUserDataStore from "@/store";
 
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+
 function NavbarMain() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const { userData } = useUserDataStore();
-  console.log("🚀 ~ NavbarMain ~ userData:", userData);
+  const router = useRouter();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { userData, setUserData } = useUserDataStore();
+
+  const handleLogout = () => {
+    setUserData(null);
+    router.push("/");
+  };
 
   const menuItems = ["About", "Products"];
   return (
@@ -27,26 +43,20 @@ function NavbarMain() {
           className="sm:hidden"
         />
         <NavbarBrand>
-          <p className="font-bold text-inherit">ECOMMERCE</p>
+          <Link href="/" className="font-bold text-inherit">
+            ECOMMERCE
+          </Link>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
+        {userData?.token && (
+          <NavbarItem>
+            <Link color="foreground" href="/dashboard">
+              Dasboard
+            </Link>
+          </NavbarItem>
+        )}
       </NavbarContent>
       {!userData?.token && (
         <NavbarContent justify="end">
@@ -54,7 +64,7 @@ function NavbarMain() {
             <Link href="/sign-in">Login</Link>
           </NavbarItem>
           <NavbarItem>
-            <Button as={Link} color="primary" href="#" variant="flat">
+            <Button as={Link} color="primary" href="/sign-up" variant="flat">
               Sign Up
             </Button>
           </NavbarItem>
@@ -71,7 +81,7 @@ function NavbarMain() {
       {userData?.token && (
         <NavbarContent justify="end">
           <NavbarItem className="hidden lg:flex">
-            <Link href="#">Logout</Link>
+            <Button onPress={onOpen}>Logout</Button>
           </NavbarItem>
         </NavbarContent>
       )}
@@ -96,6 +106,32 @@ function NavbarMain() {
           </NavbarMenuItem>
         ))}
       </NavbarMenu>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Heyyy</ModalHeader>
+              <ModalBody>
+                <p>Estas seguro que deseas cerrar sesion</p>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button
+                  color="primary"
+                  onPress={() => {
+                    handleLogout();
+                    onClose();
+                  }}
+                >
+                  Cerrar sesion
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </Navbar>
   );
 }
