@@ -1,16 +1,29 @@
 "use client";
 import useUserDataStore from "@/store";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/react";
+import { getOrdersService } from "@/services/ordersServices";
 
 function Page() {
+  const [orders, setOrders] = useState([]);
   const { userData } = useUserDataStore();
+  console.log("🚀 ~ Page ~ userData:", userData);
   const router = useRouter();
 
   const goToCart = () => {
     router.push("/cart");
   };
+
+  const getOrders = async () => {
+    const res = await getOrdersService(userData.token);
+    setOrders(res);
+  };
+
+  useEffect(() => {
+    if (!userData?.token) return;
+    getOrders();
+  }, [userData]);
 
   return (
     <div className="max-w-4xl mx-auto my-10 px-4 py-8">
@@ -44,6 +57,17 @@ function Page() {
           <p className="text-lg">{userData?.user?.phone || "N/A"}</p>
         </div>
       </main>
+      <section>
+        <h2 className="text-2xl font-bold mb-4">Mis Compras</h2>
+        <div>
+          {orders.map((order: any) => (
+            <div key={order.id} className="border p-4 mb-4">
+              <h3 className="text-lg font-semibold">Orden #{order.id}</h3>
+              <p>Fecha: {order.date}</p>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

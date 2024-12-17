@@ -1,20 +1,24 @@
 "use client";
 import { IProduct } from "@/interfaces";
+import { createOrderService } from "@/services/ordersServices";
 import useUserDataStore from "@/store";
 import { Button } from "@nextui-org/react";
+import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 function CartProducts() {
   const [totalPrecio, setTotal] = useState(0);
-  const { cart, setCart } = useUserDataStore();
+  const { userData, cart, setCart } = useUserDataStore();
+  const [isLogging, setIsLogging] = useState(false);
 
   // Actualiza el total del precio
   useEffect(() => {
     if (cart.length === 0) return;
-    const total = cart.reduce(
-      (acc, product: IProduct) => acc + product.price,
-      0
-    );
+    let total = 0;
+    cart.forEach((product: IProduct) => {
+      total += product.price;
+    });
     setTotal(total);
   }, [cart]);
 
@@ -24,6 +28,36 @@ function CartProducts() {
       (product: IProduct) => product.id?.toString() !== productId
     );
     setCart(updatedCart);
+  };
+
+  const handleClick = async () => {
+    setIsLogging(true);
+    const idProducts = cart.map((product: IProduct) => product.id);
+    const res = await createOrderService(
+      idProducts,
+      userData?.user?.id,
+      userData.token
+    );
+    console.log("🚀 ~ handleClick ~ res:", res);
+
+    if (res) {
+      toast("Compra realizada con exito", {
+        duration: 2000,
+        type: "success",
+        position: "top-center",
+        richColors: true,
+      });
+      setCart([]);
+      setIsLogging(false);
+    } else {
+      toast("Error al realizar la compra", {
+        duration: 2000,
+        type: "error",
+        position: "top-center",
+        richColors: true,
+      });
+      setIsLogging(false);
+    }
   };
 
   return (
@@ -76,10 +110,12 @@ function CartProducts() {
             </span>
           </div>
           <Button
+            onClick={handleClick}
             color="primary"
             className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white rounded-md py-2"
           >
             Comprar
+            {isLogging && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           </Button>
         </div>
       )}

@@ -1,8 +1,8 @@
 import ProductDetail from "@/app/components/productDetail";
 import React from "react";
 
-function page({ params }: { params: { productID: string } }) {
-  const { productID } = params;
+async function page({ params }: { params: { productID: string } }) {
+  const { productID } = await params;
   //   console.log("🚀 ~ page ~ productID:", productID);
   return (
     <div>

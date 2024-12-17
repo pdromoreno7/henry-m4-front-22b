@@ -21,6 +21,7 @@ const useUserDataStore = create<EcommerceStore>()(
         userData: {
           login: false,
           user: {
+            id: 0,
             name: "",
             email: "",
             password: "",
