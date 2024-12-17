@@ -21,13 +21,14 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@nextui-org/react";
+import { ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 function NavbarMain() {
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { userData, setUserData } = useUserDataStore();
+  const { userData, cart, setUserData } = useUserDataStore();
 
   const handleLogout = () => {
     setUserData(null);
@@ -49,42 +50,43 @@ function NavbarMain() {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden sm:flex gap-10 " justify="end">
         {userData?.token && (
           <NavbarItem>
-            <Link color="foreground" href="/dashboard">
-              Dasboard
-            </Link>
+            <Link href="/dashboard">Dasboard</Link>
           </NavbarItem>
         )}
-      </NavbarContent>
-      {!userData?.token && (
-        <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
-            <Link href="/sign-in">Login</Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Button as={Link} color="primary" href="/sign-up" variant="flat">
-              Sign Up
-            </Button>
-          </NavbarItem>
-        </NavbarContent>
-      )}
-      {userData?.token && (
-        <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
-            <Link href="/dashboard">{userData.user.name}</Link>
-          </NavbarItem>
-        </NavbarContent>
-      )}
+        <NavbarItem>
+          <Link href="/cart" className="relative">
+            <ShoppingCart size={24} />
+            {cart.length > 0 && (
+              <span className="absolute -top-1 -right-2 bg-orange-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                {cart.length}
+              </span>
+            )}
+          </Link>
+        </NavbarItem>
+        {!userData?.token && (
+          <>
+            <NavbarItem className="hidden lg:flex">
+              <Link href="/sign-in">Login</Link>
+            </NavbarItem>
+            <NavbarItem>
+              <Button as={Link} color="primary" href="/sign-up" variant="flat">
+                Sign Up
+              </Button>
+            </NavbarItem>
+          </>
+        )}
 
-      {userData?.token && (
-        <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
-            <Button onPress={onOpen}>Logout</Button>
-          </NavbarItem>
-        </NavbarContent>
-      )}
+        {userData?.token && (
+          <>
+            <NavbarItem className="hidden lg:flex">
+              <Button onPress={onOpen}>Logout</Button>
+            </NavbarItem>
+          </>
+        )}
+      </NavbarContent>
 
       <NavbarMenu>
         {menuItems.map((item, index) => (

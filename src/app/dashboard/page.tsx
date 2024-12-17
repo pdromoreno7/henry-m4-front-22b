@@ -1,18 +1,49 @@
 "use client";
 import useUserDataStore from "@/store";
 import React from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@nextui-org/react";
 
 function Page() {
   const { userData } = useUserDataStore();
+  const router = useRouter();
 
-  
+  const goToCart = () => {
+    router.push("/cart");
+  };
+
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>{userData?.user?.name}</p>
-      <p>{userData?.user?.email}</p>
-      <p>{userData?.user?.address}</p>
-      <p>{userData?.user?.phone}</p>
+    <div className="max-w-4xl mx-auto my-10 px-4 py-8">
+      {/* Encabezado */}
+      <header className="flex justify-between items-center mb-8 border-b pb-4">
+        <h1 className="text-4xl font-bold text-gray-800">Perfil</h1>
+        <Button
+          onClick={goToCart}
+          className="bg-yellow-500  text-white px-6 py-2 rounded-md transition"
+        >
+          Carrito
+        </Button>
+      </header>
+
+      {/* Información del Usuario */}
+      <main className="space-y-6 text-gray-700">
+        <div>
+          <h2 className="text-xl font-semibold">Nombre:</h2>
+          <p className="text-lg">{userData?.user?.name || "N/A"}</p>
+        </div>
+        <div>
+          <h2 className="text-xl font-semibold">Correo Electrónico:</h2>
+          <p className="text-lg">{userData?.user?.email || "N/A"}</p>
+        </div>
+        <div>
+          <h2 className="text-xl font-semibold">Dirección:</h2>
+          <p className="text-lg">{userData?.user?.address || "N/A"}</p>
+        </div>
+        <div>
+          <h2 className="text-xl font-semibold">Teléfono:</h2>
+          <p className="text-lg">{userData?.user?.phone || "N/A"}</p>
+        </div>
+      </main>
     </div>
   );
 }

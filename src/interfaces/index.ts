@@ -24,6 +24,13 @@ export interface RegisterFormType {
   address: string;
   phone: string;
 }
+export interface UserType {
+  name: string;
+  email: string;
+  password: string;
+  address: string;
+  phone: string;
+}
 
 export interface FormDataType {
   email: string;

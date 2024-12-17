@@ -6,7 +6,6 @@ function page({ params }: { params: { productID: string } }) {
   //   console.log("🚀 ~ page ~ productID:", productID);
   return (
     <div>
-      Product page
       <ProductDetail id={productID} />
     </div>
   );
