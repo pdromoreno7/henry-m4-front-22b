@@ -37,3 +37,10 @@ export interface FormDataType {
   email: string;
   password: string;
 }
+
+export interface OrderType {
+  id: number;
+  status: "approved" | "pending" | "rejected"; // Puedes agregar más estados según sea necesario
+  date: string; // O usar `Date` si planeas convertir la cadena a un objeto de fecha
+  products: IProduct[];
+}

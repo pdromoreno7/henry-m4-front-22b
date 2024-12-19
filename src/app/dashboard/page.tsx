@@ -4,11 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/react";
 import { getOrdersService } from "@/services/ordersServices";
+import { OrderType } from "@/interfaces";
 
 function Page() {
   const [orders, setOrders] = useState([]);
   const { userData } = useUserDataStore();
-  console.log("🚀 ~ Page ~ userData:", userData);
   const router = useRouter();
 
   const goToCart = () => {
@@ -60,7 +60,7 @@ function Page() {
       <section>
         <h2 className="text-2xl font-bold mb-4">Mis Compras</h2>
         <div>
-          {orders.map((order: any) => (
+          {orders.map((order: OrderType) => (
             <div key={order.id} className="border p-4 mb-4">
               <h3 className="text-lg font-semibold">Orden #{order.id}</h3>
               <p>Fecha: {order.date}</p>
