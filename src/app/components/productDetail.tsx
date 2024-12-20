@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { IProduct } from "../../interfaces/index";
+
 import { toast } from "sonner";
 
 import { getProductById } from "@/services/productServices";
 import { Button } from "@nextui-org/react";
 import useUserDataStore from "@/store";
 import { Loader2 } from "lucide-react";
+import { CustomToastOptions, IProduct } from "@/interfaces";
 
 interface PropsProductDetail {
   id: string;
@@ -33,15 +34,14 @@ function ProductDetail({ id }: PropsProductDetail) {
           type: "success",
           position: "top-center",
           richColors: true,
-        });
-        setCart([...cart, producto]);
+        } as CustomToastOptions);
+        setCart([...cart, producto ?? ({} as IProduct)]);
       } else {
-        toast("El producto ya existe en el carrito", {
+        toast("Producto ya existe en el carrito", {
           duration: 2000,
-          type: "info",
           position: "top-center",
           richColors: true,
-        });
+        } as CustomToastOptions);
       }
     } else {
       toast("Debes iniciar sesión para agregar productos al carrito");

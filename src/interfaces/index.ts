@@ -44,3 +44,9 @@ export interface OrderType {
   date: string; // O usar `Date` si planeas convertir la cadena a un objeto de fecha
   products: IProduct[];
 }
+export type CustomToastOptions = {
+  duration: number;
+  type: "success" | "error";
+  position: "top-center";
+  richColors: boolean;
+};
