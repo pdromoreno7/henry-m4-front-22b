@@ -6,6 +6,12 @@ import { Button } from "@nextui-org/react";
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
+type CustomToastOptions = {
+  duration: number;
+  type: "success" | "error";
+  position: "top-center";
+  richColors: boolean;
+};
 
 function CartProducts() {
   const [totalPrecio, setTotal] = useState(0);
@@ -46,7 +52,7 @@ function CartProducts() {
         type: "success",
         position: "top-center",
         richColors: true,
-      });
+      } as CustomToastOptions);
       setCart([]);
       setIsLogging(false);
     } else {
@@ -55,7 +61,7 @@ function CartProducts() {
         type: "error",
         position: "top-center",
         richColors: true,
-      });
+      } as CustomToastOptions);
       setIsLogging(false);
     }
   };
