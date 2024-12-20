@@ -31,7 +31,18 @@ function NavbarMain() {
   const { userData, cart, setUserData } = useUserDataStore();
 
   const handleLogout = () => {
-    setUserData(null);
+    setUserData({
+      login: false,
+      user: {
+        id: 0,
+        name: "",
+        email: "",
+        password: "",
+        address: "",
+        phone: "",
+      },
+      token: "",
+    });
     router.push("/");
   };
 
