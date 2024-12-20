@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <div className="flex gap-5 justify-center items-center flex-wrap my-10">
       {products.map((product, index) => (
-        <Link key={index} href={`/product/${product.id.toString()}`}>
+        <Link key={index} href={`/product/${product.id}`}>
           <CardProduct
             key={index}
             name={product.name}

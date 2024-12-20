@@ -1,14 +1,19 @@
 import ProductDetail from "@/app/components/productDetail";
-import React from "react";
+import { NextPage } from "next";
 
-function page({ params }: { params: { productID: string } }) {
+interface ProductPageProps {
+  params: {
+    productID: string;
+  };
+}
+
+const Page: NextPage<ProductPageProps> = ({ params }) => {
   const { productID } = params;
-  //   console.log("🚀 ~ page ~ productID:", productID);
   return (
     <div>
       <ProductDetail id={productID} />
     </div>
   );
-}
+};
 
-export default page;
+export default Page;
