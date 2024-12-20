@@ -1,6 +1,6 @@
 import { IProduct } from "@/interfaces";
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL;
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 export async function getProducts() {
   try {
     const res = await fetch(`${apiURL}/products`, {

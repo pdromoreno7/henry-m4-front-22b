@@ -1,6 +1,6 @@
 import { FormDataType, RegisterFormType } from "@/interfaces";
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL;
+const apiURL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 export async function registerUser(userData: RegisterFormType) {
   console.log("🚀 ~ registerUser ~ userData:", userData);
   try {
